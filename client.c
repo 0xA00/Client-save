@@ -23,16 +23,25 @@ int GLOBAL_CONFIG = FALSE;
 int IsFolder = FALSE;
 int IsHTTP = FALSE;
 
-void print_help()
+void print_help(char *argv[])
 {
+    argv[0] = argv[0] + 2;
     printf("Usage: client [options]\n");
     printf("Options:\n");
     printf("  -h, --help\t\t\tPrint this help message and exit\n");
     printf("  -v, --verbose\t\t\tVerbose output\n");
-    printf("  -cc, --customconfig\t\t\tcustom .saveconfig will be used\n");
+    printf("  -cc, --customconfig\t\tcustom .saveconfig will be used\n");
     printf("  -i, --ip\t\t\tIP address of the server\n");
     printf("  -p, --port\t\t\tPort of the server\n");
     printf("      -https\t\t\tUse HTTPS protocol\n");
+    printf("Commands:\n");
+    printf("  push\t\t\t\tPush a file or a directory to the server\n");
+    printf("  pull\t\t\t\tPull a file or a directory from the server\n");
+    printf("Examples:\n");
+    printf("  %s push file.txt -cc --ip localhost -p 8080\n", argv[0]);
+    printf("  %s pull -f file.txt --ip localhost -p 8080\n", argv[0]);
+    printf("  %s push <directory> --ip localhost -p -https 8081\n" , argv[0]);
+    printf("  %s pull -d <directory> --verbose --ip localhost -p -https 8081\n" , argv[0]);
 }
 
 size_t read_callback(void *ptr, size_t size, size_t nmemb, void *stream)
@@ -350,7 +359,7 @@ void get_hash(const char *file_path, const char *url, struct ResponseData *respo
         {
             if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)
             {
-                print_help();
+                print_help(argv);
                 return 0;
             }
             else if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--verbose") == 0)
@@ -769,7 +778,7 @@ void get_hash(const char *file_path, const char *url, struct ResponseData *respo
 
         if (argc == 1)
         {
-            print_help();
+            print_help(argv);
             return 0;
         }
 
