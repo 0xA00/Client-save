@@ -40,8 +40,8 @@ void print_help(char *argv[])
     printf("Examples:\n");
     printf("  %s push file.txt -cc --ip localhost -p 8080\n", argv[0]);
     printf("  %s pull -f file.txt --ip localhost -p 8080\n", argv[0]);
-    printf("  %s push <directory> --ip localhost -p -https 8081\n" , argv[0]);
-    printf("  %s pull -d <directory> --verbose --ip localhost -p -https 8081\n" , argv[0]);
+    printf("  %s push <directory> --ip localhost -p --https 8081\n" , argv[0]);
+    printf("  %s pull -d <directory> --verbose --ip localhost -p --https 8081\n" , argv[0]);
 }
 
 size_t read_callback(void *ptr, size_t size, size_t nmemb, void *stream)
@@ -373,7 +373,7 @@ void get_hash(const char *file_path, const char *url, struct ResponseData *respo
             else if (strcmp(argv[i], "-p") == 0 || strcmp(argv[i], "--port") == 0)
             {
                 //if argv+1 is -https , set IsHTTP to TRUE
-                if (strcmp(argv[i + 1], "-https") == 0)
+                if (strcmp(argv[i + 1], "--https") == 0)
                 {
                     IsHTTP = TRUE;
                     port = atoi(argv[i + 2]);
